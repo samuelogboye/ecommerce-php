@@ -13,16 +13,12 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('view', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('product_id')->constrained('product')->onDelete('cascade');
+            $table->unsignedBigInteger('viewCount')->default(0);
             $table->timestamps();
-            $table->index('id');
+            $table->index('product_id');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('view');
     }
 };

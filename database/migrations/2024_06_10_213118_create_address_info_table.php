@@ -13,16 +13,17 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('address_info', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->text('address_1');
+            $table->text('address_2')->nullable();
+            $table->string('country');
+            $table->string('state_province');
+            $table->string('city');
+            $table->unsignedBigInteger('zipcode');
             $table->timestamps();
-            $table->index('id');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('address_info');
     }
 };

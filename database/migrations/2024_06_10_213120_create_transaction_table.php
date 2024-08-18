@@ -13,16 +13,17 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('transaction', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignUuid('order_id')->constrained()->onDelete('cascade');
+            $table->longText('payment_ref');
+            $table->string('payment_method');
+            $table->decimal('amount', 10, 2); // Specified precision and scale
+            $table->string('status');
             $table->timestamps();
-            $table->index('id');
+
+            // Indexing foreign key and payment reference
+            $table->index(['order_id']);
         });
 
         Schema::enableForeignKeyConstraints();
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('transaction');
     }
 };
