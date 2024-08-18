@@ -1,0 +1,54 @@
+[17-Aug-2024 09:14:52 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: The HTTP status code "0" is not valid. in /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php:502
+Stack trace:
+#0 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php(228): Symfony\Component\HttpFoundation\Response->setStatusCode()
+#1 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/JsonResponse.php(41): Symfony\Component\HttpFoundation\Response->__construct()
+#2 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php(32): Symfony\Component\HttpFoundation\JsonResponse->__construct()
+#3 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(102): Illuminate\Http\JsonResponse->__construct()
+#4 /home/samuel/Documents/PHP-Projects/ecommerce-php/app/Exceptions/Handler.php(46): Illuminate\Routing\ResponseFactory->json()
+#5 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(218): App\Exceptions\Handler->render()
+#6 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(195): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#7 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#8 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#9 {main}
+  thrown in /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php on line 502
+[17-Aug-2024 09:14:52 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: The HTTP status code "0" is not valid. in /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php:502
+Stack trace:
+#0 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php(228): Symfony\Component\HttpFoundation\Response->setStatusCode()
+#1 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/JsonResponse.php(41): Symfony\Component\HttpFoundation\Response->__construct()
+#2 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php(32): Symfony\Component\HttpFoundation\JsonResponse->__construct()
+#3 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(102): Illuminate\Http\JsonResponse->__construct()
+#4 /home/samuel/Documents/PHP-Projects/ecommerce-php/app/Exceptions/Handler.php(46): Illuminate\Routing\ResponseFactory->json()
+#5 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(218): App\Exceptions\Handler->render()
+#6 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(195): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#7 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#8 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#9 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#10 {main}
+  thrown in /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php on line 502
+[17-Aug-2024 09:15:00 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: The HTTP status code "0" is not valid. in /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php:502
+Stack trace:
+#0 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php(228): Symfony\Component\HttpFoundation\Response->setStatusCode()
+#1 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/JsonResponse.php(41): Symfony\Component\HttpFoundation\Response->__construct()
+#2 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php(32): Symfony\Component\HttpFoundation\JsonResponse->__construct()
+#3 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(102): Illuminate\Http\JsonResponse->__construct()
+#4 /home/samuel/Documents/PHP-Projects/ecommerce-php/app/Exceptions/Handler.php(46): Illuminate\Routing\ResponseFactory->json()
+#5 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(218): App\Exceptions\Handler->render()
+#6 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(195): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#7 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#8 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#9 {main}
+  thrown in /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php on line 502
+[17-Aug-2024 09:15:00 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: The HTTP status code "0" is not valid. in /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php:502
+Stack trace:
+#0 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php(228): Symfony\Component\HttpFoundation\Response->setStatusCode()
+#1 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/JsonResponse.php(41): Symfony\Component\HttpFoundation\Response->__construct()
+#2 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php(32): Symfony\Component\HttpFoundation\JsonResponse->__construct()
+#3 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(102): Illuminate\Http\JsonResponse->__construct()
+#4 /home/samuel/Documents/PHP-Projects/ecommerce-php/app/Exceptions/Handler.php(46): Illuminate\Routing\ResponseFactory->json()
+#5 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(218): App\Exceptions\Handler->render()
+#6 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(195): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#7 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#8 /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#9 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#10 {main}
+  thrown in /home/samuel/Documents/PHP-Projects/ecommerce-php/vendor/symfony/http-foundation/Response.php on line 502

@@ -2,8 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\{
+    AuthController,
+    AddressInfoController,
+    BannerController,
+    CategoryController,
+    OrderController,
+    OrderItemController,
+    ProductController,
+    SubCategoryController,
+    TagController,
+    TransactionController,
+    UserController,
+    ViewController
+};
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,8 +27,18 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('address_infos', AddressInfoController::class);
+    Route::apiResource('banners', BannerController::class);
+    Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('orders', OrderController::class);
+    Route::apiResource('order_items', OrderItemController::class);
+    Route::apiResource('products', ProductController::class);
+    Route::apiResource('sub_categories', SubCategoryController::class);
+    Route::apiResource('tags', TagController::class);
+    Route::apiResource('transactions', TransactionController::class);
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('views', ViewController::class);
 });
 
 Route::group([
