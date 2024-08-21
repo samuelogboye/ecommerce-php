@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('sub_category', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->foreignId('category_id')->constrained('category')->onDelete('cascade');
+            $table->text('content')->nullable();
+            $table->text('location')->nullable();
             $table->timestamps();
-            $table->index(['name', 'category_id']);
         });
 
         Schema::enableForeignKeyConstraints();
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sub_category');
+        Schema::dropIfExists('banner');
     }
 };

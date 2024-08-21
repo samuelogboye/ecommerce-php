@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
 {
     public function index()
     {
-        return Banner::all();
+        $banners = Banner::all();
+        return response()->json([
+            'message'=> 'All banners retrieved',
+            'data'=>$banners,
+            'count'=>count($banners)
+        ], 200);
     }
 
     public function store(Request $request)
@@ -20,7 +26,11 @@ class BannerController extends Controller
 
     public function show($id)
     {
-        return Banner::findOrFail($id);
+        try {
+            return Banner::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Banner not found'], 404);
+        }
     }
 
     public function update(Request $request, $id)

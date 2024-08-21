@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('address_info', function (Blueprint $table) {
+        Schema::create('address_infos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('country');
             $table->string('state_province');
             $table->string('city');
-            $table->unsignedBigInteger('zipcode');
+            $table->string('zipcode');
             $table->timestamps();
         });
 

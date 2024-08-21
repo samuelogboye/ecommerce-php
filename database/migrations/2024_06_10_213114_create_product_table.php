@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->longText('name');
             $table->text('description')->nullable();
             $table->bigInteger('qty');
             $table->decimal('price', 8, 2);
-            $table->foreignId('category_id')->constrained('category')->onDelete('cascade');
-            $table->foreignId('subcategory_id')->nullable()->constrained('sub_category')->onDelete('set null');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('subcategory_id')->nullable()->constrained('sub_categories')->onDelete('set null');
             $table->longText('featured_image')->nullable();
             $table->bigInteger('rank')->default(0);
             $table->string('status')->default('available');
