@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Validator;
 
 class CategoryController extends Controller
 {
@@ -12,7 +14,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::with('subCategories', 'products')->get();
+        $categories = Category::with('subCategories', 'products')->get();
+        return response()->json([
+            'message'=> 'All categories retrieved',
+            'data'=>$categories,
+            'count'=>count($categories)
+        ], 200);
     }
 
     /**
@@ -20,8 +27,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::create($request->all());
-        return response()->json($category, 201);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        # check if the category name exists before
+        if (Category::where('name', $request->name)->exists()) {
+            return response()->json(['error' => 'Category name already exists'], 422);
+        }
+        
+        $product = Category::create($validator->validated());
+        return response()->json($product, 201);
     }
 
     /**
@@ -29,7 +49,11 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        return Category::with('subCategories', 'products')->findOrFail($id);
+        try {
+            return Category::with('subCategories', 'products')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
     }
 
     /**
