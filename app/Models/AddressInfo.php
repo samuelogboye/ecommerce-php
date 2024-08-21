@@ -9,8 +9,6 @@ class AddressInfo extends Model
 {
     use HasFactory;
 
-    protected $table = 'address_info';
-
     protected $fillable = [
         'user_id', 'address_1', 'address_2', 'country', 'state_province', 'city', 'zipcode',
     ];
