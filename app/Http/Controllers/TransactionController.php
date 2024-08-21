@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        return Transaction::with('order')->get();
+        $transactions = Transaction::with('order')->get();
+        return response()->json([
+            'message'=> 'All transactions retrieved',
+            'data'=>$transactions,
+            'count'=>count($transactions)
+        ], 200);
     }
 
     public function store(Request $request)
@@ -20,7 +26,11 @@ class TransactionController extends Controller
 
     public function show($id)
     {
-        return Transaction::with('order')->findOrFail($id);
+        try {
+            return Transaction::with('order')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Transaction not found'], 404);
+        }
     }
 
     public function update(Request $request, $id)
