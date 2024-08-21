@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     public function index()
     {
-        return Order::with('orderItems', 'transactions')->get();
+        $orders = Order::with('orderItems', 'transactions')->get();
+        return response()->json([
+            'message'=> 'All orders retrieved',
+            'data'=>$orders,
+            'count'=>count($orders)
+        ], 200);
     }
 
     public function store(Request $request)
@@ -20,7 +26,11 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        return Order::with('orderItems', 'transactions')->findOrFail($id);
+        try {
+            return Order::with('orderItems', 'transactions')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Order not found'], 404);
+        }
     }
 
     public function update(Request $request, $id)
