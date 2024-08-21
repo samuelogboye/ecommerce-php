@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\SubCategory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
     public function index()
     {
-        return SubCategory::with('category', 'products')->get();
+        $subcategories = SubCategory::with('category', 'products')->get();
+        return response()->json([
+            'message'=> 'All subcategories retrieved',
+            'data'=>$subcategories,
+            'count'=>count($subcategories)
+        ], 200);
     }
 
     public function store(Request $request)
@@ -20,7 +26,11 @@ class SubCategoryController extends Controller
 
     public function show($id)
     {
-        return SubCategory::with('category', 'products')->findOrFail($id);
+        try {
+            return SubCategory::with('category', 'products')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'SubCategory not found'], 404);
+        }
     }
 
     public function update(Request $request, $id)
