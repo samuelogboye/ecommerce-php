@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -20,7 +21,11 @@ class UserController extends Controller
 
     public function show($id)
     {
-        return User::with('orders', 'addressInfo', 'transactions')->findOrFail($id);
+        try {
+            return User::with('orders', 'addressInfo', 'transactions')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
     }
 
     public function update(Request $request, $id)
