@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
     public function index()
     {
-        return Tag::with('products')->get();
+        $tags = Tag::with('products')->get();
+        return response()->json([
+            'message'=> 'All tags retrieved',
+            'data'=>$tags,
+            'count'=>count($tags)
+        ], 200);
     }
 
     public function store(Request $request)
@@ -20,7 +26,11 @@ class TagController extends Controller
 
     public function show($id)
     {
-        return Tag::with('products')->findOrFail($id);
+        try {
+            return Tag::with('products')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Tag not found'], 404);
+        }
     }
 
     public function update(Request $request, $id)
