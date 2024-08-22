@@ -16,6 +16,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = User::create($request->all());
+
         return response()->json($user, 201);
     }
 
@@ -32,12 +33,14 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->update($request->all());
+
         return response()->json($user, 200);
     }
 
     public function destroy($id)
     {
         User::destroy($id);
+
         return response()->json(null, 204);
     }
 }

@@ -1,21 +1,19 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AddressInfoController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    AuthController,
-    AddressInfoController,
-    BannerController,
-    CategoryController,
-    OrderController,
-    OrderItemController,
-    ProductController,
-    SubCategoryController,
-    TagController,
-    TransactionController,
-    UserController,
-    ViewController
-};
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,7 +41,7 @@ Route::middleware('auth:api')->group(function () {
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix' => 'auth',
 
 ], function () {
     Route::post('/register', [AuthController::class, 'register']);

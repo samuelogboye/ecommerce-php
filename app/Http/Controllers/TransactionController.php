@@ -11,16 +11,18 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::with('order')->get();
+
         return response()->json([
-            'message'=> 'All transactions retrieved',
-            'data'=>$transactions,
-            'count'=>count($transactions)
+            'message' => 'All transactions retrieved',
+            'data' => $transactions,
+            'count' => count($transactions),
         ], 200);
     }
 
     public function store(Request $request)
     {
         $transaction = Transaction::create($request->all());
+
         return response()->json($transaction, 201);
     }
 
@@ -37,12 +39,14 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::findOrFail($id);
         $transaction->update($request->all());
+
         return response()->json($transaction, 200);
     }
 
     public function destroy($id)
     {
         Transaction::destroy($id);
+
         return response()->json(null, 204);
     }
 }

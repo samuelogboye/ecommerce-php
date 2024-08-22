@@ -17,8 +17,8 @@ class ProductFactory extends Factory
 
         // Select a subcategory that belongs to the selected category
         $subcategory = SubCategory::where('category_id', $category->id)
-                                  ->inRandomOrder()
-                                  ->first();
+            ->inRandomOrder()
+            ->first();
 
         return [
             'name' => $this->faker->word,

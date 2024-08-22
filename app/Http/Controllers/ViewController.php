@@ -10,17 +10,19 @@ class ViewController extends Controller
 {
     public function index()
     {
-        $views =  View::with('product')->get();
+        $views = View::with('product')->get();
+
         return response()->json([
-            'message'=> 'All views retrieved',
-            'data'=>$views,
-            'count'=>count($views)
+            'message' => 'All views retrieved',
+            'data' => $views,
+            'count' => count($views),
         ], 200);
     }
 
     public function store(Request $request)
     {
         $view = View::create($request->all());
+
         return response()->json($view, 201);
     }
 
@@ -37,12 +39,14 @@ class ViewController extends Controller
     {
         $view = View::findOrFail($id);
         $view->update($request->all());
+
         return response()->json($view, 200);
     }
 
     public function destroy($id)
     {
         View::destroy($id);
+
         return response()->json(null, 204);
     }
 }

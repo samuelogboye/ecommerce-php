@@ -15,10 +15,11 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::with('subCategories', 'products')->get();
+
         return response()->json([
-            'message'=> 'All categories retrieved',
-            'data'=>$categories,
-            'count'=>count($categories)
+            'message' => 'All categories retrieved',
+            'data' => $categories,
+            'count' => count($categories),
         ], 200);
     }
 
@@ -35,12 +36,13 @@ class CategoryController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        # check if the category name exists before
+        // check if the category name exists before
         if (Category::where('name', $request->name)->exists()) {
             return response()->json(['error' => 'Category name already exists'], 422);
         }
-        
+
         $product = Category::create($validator->validated());
+
         return response()->json($product, 201);
     }
 
@@ -63,6 +65,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->update($request->all());
+
         return response()->json($category, 200);
     }
 
@@ -72,6 +75,7 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         Category::destroy($id);
+
         return response()->json(null, 204);
     }
 }

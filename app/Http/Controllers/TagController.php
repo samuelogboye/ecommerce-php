@@ -11,16 +11,18 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::with('products')->get();
+
         return response()->json([
-            'message'=> 'All tags retrieved',
-            'data'=>$tags,
-            'count'=>count($tags)
+            'message' => 'All tags retrieved',
+            'data' => $tags,
+            'count' => count($tags),
         ], 200);
     }
 
     public function store(Request $request)
     {
         $tag = Tag::create($request->all());
+
         return response()->json($tag, 201);
     }
 
@@ -37,12 +39,14 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
         $tag->update($request->all());
+
         return response()->json($tag, 200);
     }
 
     public function destroy($id)
     {
         Tag::destroy($id);
+
         return response()->json(null, 204);
     }
 }

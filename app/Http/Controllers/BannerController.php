@@ -11,16 +11,18 @@ class BannerController extends Controller
     public function index()
     {
         $banners = Banner::all();
+
         return response()->json([
-            'message'=> 'All banners retrieved',
-            'data'=>$banners,
-            'count'=>count($banners)
+            'message' => 'All banners retrieved',
+            'data' => $banners,
+            'count' => count($banners),
         ], 200);
     }
 
     public function store(Request $request)
     {
         $banner = Banner::create($request->all());
+
         return response()->json($banner, 201);
     }
 
@@ -37,12 +39,14 @@ class BannerController extends Controller
     {
         $banner = Banner::findOrFail($id);
         $banner->update($request->all());
+
         return response()->json($banner, 200);
     }
 
     public function destroy($id)
     {
         Banner::destroy($id);
+
         return response()->json(null, 204);
     }
 }

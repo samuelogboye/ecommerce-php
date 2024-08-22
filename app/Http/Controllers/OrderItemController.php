@@ -11,16 +11,18 @@ class OrderItemController extends Controller
     public function index()
     {
         $orderitems = OrderItem::with('order', 'product')->get();
+
         return response()->json([
-            'message'=> 'All orderitems retrieved',
-            'data'=>$orderitems,
-            'count'=>count($orderitems)
+            'message' => 'All orderitems retrieved',
+            'data' => $orderitems,
+            'count' => count($orderitems),
         ], 200);
     }
 
     public function store(Request $request)
     {
         $orderItem = OrderItem::create($request->all());
+
         return response()->json($orderItem, 201);
     }
 
@@ -37,12 +39,14 @@ class OrderItemController extends Controller
     {
         $orderItem = OrderItem::findOrFail($id);
         $orderItem->update($request->all());
+
         return response()->json($orderItem, 200);
     }
 
     public function destroy($id)
     {
         OrderItem::destroy($id);
+
         return response()->json(null, 204);
     }
 }

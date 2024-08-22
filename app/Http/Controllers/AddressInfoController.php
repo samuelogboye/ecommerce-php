@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\AddressInfo;
 use Auth;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Validator;
 
 class AddressInfoController extends Controller
 {
     private const ADDRESS_NOT_FOUND_ERROR = 'AddressInfo not found or access denied';
+
     public function index()
     {
         $info = AddressInfo::all();
+
         return response()->json([
-            'message'=> 'All Address Info retrieved',
-            'data'=>$info
+            'message' => 'All Address Info retrieved',
+            'data' => $info,
         ], 200);
     }
 
@@ -28,7 +29,7 @@ class AddressInfoController extends Controller
             'city' => 'required|string|max:50',
             'state_province' => 'required|string|max:50',
             'country' => 'required|string|max:100',
-            'zipcode' => 'required|string|max:20'
+            'zipcode' => 'required|string|max:20',
         ]);
 
         if ($validator->fails()) {
@@ -44,10 +45,12 @@ class AddressInfoController extends Controller
         if ($addressInfo) {
             // Update the existing address
             $addressInfo->update($validator->validated());
+
             return response()->json($addressInfo, 200);
         } else {
             // Create a new address if not existing
             $addressInfo = AddressInfo::create(array_merge($validator->validated(), ['user_id' => $userId]));
+
             return response()->json($addressInfo, 201);
         }
     }
@@ -56,7 +59,7 @@ class AddressInfoController extends Controller
     {
         $addressInfo = AddressInfo::find($id);
 
-        if (!$addressInfo || $addressInfo->user_id !== Auth::id()) {
+        if (! $addressInfo || $addressInfo->user_id !== Auth::id()) {
             return response()->json(['message' => self::ADDRESS_NOT_FOUND_ERROR], 404);
         }
 
@@ -67,7 +70,7 @@ class AddressInfoController extends Controller
     {
         $addressInfo = AddressInfo::find($id);
 
-        if (!$addressInfo || $addressInfo->user_id !== Auth::id()) {
+        if (! $addressInfo || $addressInfo->user_id !== Auth::id()) {
             return response()->json(['message' => self::ADDRESS_NOT_FOUND_ERROR], 404);
         }
 
@@ -77,7 +80,7 @@ class AddressInfoController extends Controller
             'city' => 'required|string|max:50',
             'state_province' => 'required|string|max:50',
             'country' => 'required|string|max:100',
-            'zipcode' => 'required|string|max:20'
+            'zipcode' => 'required|string|max:20',
         ]);
 
         if ($validator->fails()) {
@@ -85,6 +88,7 @@ class AddressInfoController extends Controller
         }
 
         $addressInfo->update($validator->validated());
+
         return response()->json($addressInfo);
     }
 
@@ -92,11 +96,12 @@ class AddressInfoController extends Controller
     {
         $addressInfo = AddressInfo::find($id);
 
-        if (!$addressInfo || $addressInfo->user_id !== Auth::id()) {
+        if (! $addressInfo || $addressInfo->user_id !== Auth::id()) {
             return response()->json(['message' => self::ADDRESS_NOT_FOUND_ERROR], 404);
         }
 
         $addressInfo->delete();
+
         return response()->json(null, 204);
     }
 }

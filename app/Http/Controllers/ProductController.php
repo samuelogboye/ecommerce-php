@@ -12,10 +12,11 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category', 'subCategory', 'tags', 'views')->get();
+
         return response()->json([
-            'message'=> 'All products retrieved',
-            'data'=>$products,
-            'count'=>count($products)
+            'message' => 'All products retrieved',
+            'data' => $products,
+            'count' => count($products),
         ], 200);
     }
 
@@ -36,8 +37,9 @@ class ProductController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        
+
         $product = Product::create($validator->validated());
+
         return response()->json($product, 201);
     }
 
@@ -54,12 +56,14 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->update($request->all());
+
         return response()->json($product, 200);
     }
 
     public function destroy($id)
     {
         Product::destroy($id);
+
         return response()->json(null, 204);
     }
 }

@@ -11,16 +11,18 @@ class SubCategoryController extends Controller
     public function index()
     {
         $subcategories = SubCategory::with('category', 'products')->get();
+
         return response()->json([
-            'message'=> 'All subcategories retrieved',
-            'data'=>$subcategories,
-            'count'=>count($subcategories)
+            'message' => 'All subcategories retrieved',
+            'data' => $subcategories,
+            'count' => count($subcategories),
         ], 200);
     }
 
     public function store(Request $request)
     {
         $subCategory = SubCategory::create($request->all());
+
         return response()->json($subCategory, 201);
     }
 
@@ -37,12 +39,14 @@ class SubCategoryController extends Controller
     {
         $subCategory = SubCategory::findOrFail($id);
         $subCategory->update($request->all());
+
         return response()->json($subCategory, 200);
     }
 
     public function destroy($id)
     {
         SubCategory::destroy($id);
+
         return response()->json(null, 204);
     }
 }
