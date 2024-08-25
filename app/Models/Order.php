@@ -9,6 +9,9 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     protected $fillable = [
         'id', 'subtotal', 'shipping_cost', 'total', 'user_id', 'status',
     ];
