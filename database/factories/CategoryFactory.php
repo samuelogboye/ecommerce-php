@@ -12,7 +12,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique()->word . '_' . $this->faker->unique()->numberBetween(1, 1000),
+            'name' => $this->faker->unique()->word.'_'.$this->faker->unique()->numberBetween(1, 1000),
 
         ];
     }

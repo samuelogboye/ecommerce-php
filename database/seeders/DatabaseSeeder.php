@@ -14,7 +14,6 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\View;
 use Illuminate\Database\Seeder;
-use Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,14 +34,13 @@ class DatabaseSeeder extends Seeder
         // Create Subcategories for existing categories
         $categories->each(function ($category) {
             SubCategory::factory(3)->make(['category_id' => $category->id])
-            ->each(function ($subCategory) use ($category) {
-                SubCategory::firstOrCreate(
-                    ['name' => $subCategory->name],
-                    ['category_id' => $category->id, 'created_at' => now(), 'updated_at' => now()]
-                );
-            });
+                ->each(function ($subCategory) use ($category) {
+                    SubCategory::firstOrCreate(
+                        ['name' => $subCategory->name],
+                        ['category_id' => $category->id, 'created_at' => now(), 'updated_at' => now()]
+                    );
+                });
         });
-
 
         // Create Users
         User::factory(10)->create()->each(function ($user) {
