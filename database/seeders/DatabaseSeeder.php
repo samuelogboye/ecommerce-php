@@ -14,6 +14,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\View;
 use Illuminate\Database\Seeder;
+use Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,22 +23,40 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Categories first
-        $categories = Category::factory(5)->create();
+        // Create Categories
+        $categories = Category::factory(5)->create()->each(function ($category) {
+            // Ensure the category is uniquely created
+            Category::firstOrCreate(
+                ['name' => $category->name],
+                ['created_at' => now(), 'updated_at' => now()]
+            );
+        });
 
         // Create Subcategories for existing categories
         $categories->each(function ($category) {
-            SubCategory::factory(3)->create(['category_id' => $category->id]);
+            SubCategory::factory(3)->make(['category_id' => $category->id])
+            ->each(function ($subCategory) use ($category) {
+                SubCategory::firstOrCreate(
+                    ['name' => $subCategory->name],
+                    ['category_id' => $category->id, 'created_at' => now(), 'updated_at' => now()]
+                );
+            });
         });
+
 
         // Create Users
         User::factory(10)->create()->each(function ($user) {
             // Create Address Info for each user
             AddressInfo::factory(1)->create(['user_id' => $user->id]);
 
-            // Create Orders and related Order Items
-            Order::factory(2)->create(['user_id' => $user->id])->each(function ($order) {
-                OrderItem::factory(3)->create(['order_id' => $order->id]);
+            // Create Orders for each user
+            $orders = Order::factory(2)->create(['user_id' => $user->id]);
+
+            // Create OrderItems for each Order
+            $orders->each(function ($order) {
+                OrderItem::factory(3)->create([
+                    'order_id' => $order->id,
+                ]);
                 Transaction::factory(1)->create(['order_id' => $order->id]);
             });
         });
