@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('views', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->unsignedBigInteger('viewCount')->default(0);
+            $table->unsignedBigInteger('view_count')->default(0);
             $table->timestamps();
             $table->index('product_id');
         });
