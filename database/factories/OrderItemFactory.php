@@ -14,8 +14,8 @@ class OrderItemFactory extends Factory
     public function definition()
     {
         return [
-            'order_id' => Order::factory(),
-            'product_id' => Product::factory(),
+            // 'order_id' => Order::factory()->create()->id,
+            'product_id' => Product::factory(), // ->create()->id,
             'order_qty' => $this->faker->numberBetween(1, 10),
             'order_date' => $this->faker->dateTimeThisYear,
             'total_amount' => $this->faker->randomFloat(2, 10, 200),
