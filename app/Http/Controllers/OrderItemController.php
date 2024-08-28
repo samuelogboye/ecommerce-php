@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrderItem;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Validator;
 
 class OrderItemController extends Controller
 {
@@ -21,7 +22,19 @@ class OrderItemController extends Controller
 
     public function store(Request $request)
     {
-        $orderItem = OrderItem::create($request->all());
+        $validator = Validator::make($request->all(), [
+            'order_id' => 'required|uuid|exists:orders,id',
+            'product_id' => 'required|integer|exists:products,id',
+            'order_qty' => 'required|integer',
+            'total_amount' => 'required|string|max:255',
+            'order_date' => 'required|date|before_or_equal:today',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $orderItem = OrderItem::create($validator->validated());
 
         return response()->json($orderItem, 201);
     }
