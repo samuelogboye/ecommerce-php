@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Banner;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Validator;
 
 class BannerController extends Controller
 {
@@ -21,7 +22,16 @@ class BannerController extends Controller
 
     public function store(Request $request)
     {
-        $banner = Banner::create($request->all());
+        $validator = Validator::make($request->all(), [
+            'content' => 'required|string|max:255',
+            'location' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $banner = Banner::create($validator->validated());
 
         return response()->json($banner, 201);
     }
