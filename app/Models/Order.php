@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Str;
 
 class Order extends Model
 {
@@ -16,6 +17,18 @@ class Order extends Model
     protected $fillable = [
         'id', 'subtotal', 'shipping_cost', 'total', 'user_id', 'status',
     ];
+    // Automatically generate a UUID for the 'id' field when creating a new Order
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid();
+            }
+        });
+    }
+
 
     public function user()
     {

@@ -3,25 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Validator;
 
 class OrderController extends Controller
 {
+    // TODO: for Admin only
+    // public function index()
+    // {
+    //     $orders = Order::with('orderItems', 'transactions')->get();
+
+    //     return response()->json([
+    //         'message' => 'All orders retrieved',
+    //         'data' => $orders,
+    //         'count' => count($orders),
+    //     ], 200);
+    // }
     public function index()
     {
-        $orders = Order::with('orderItems', 'transactions')->get();
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
+        // Retrieve orders for the current user, including related orderItems and transactions
+        $orders = Order::with('orderItems', 'transactions')
+                        ->where('user_id', $userId)
+                        ->get();
 
         return response()->json([
-            'message' => 'All orders retrieved',
+            'message' => 'Orders retrieved successfully',
             'data' => $orders,
-            'count' => count($orders),
+            'count' => $orders->count(),
         ], 200);
     }
 
     public function store(Request $request)
     {
-        $order = Order::create($request->all());
+        $validator = Validator::make($request->all(), [
+            'subtotal' => 'required|string',
+            'shipping_cost' => 'required|string',
+            'total' => 'required|string',
+            'status' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
+        // Add the user ID to the validated data
+        $validatedData = $validator->validated();
+        $validatedData['user_id'] = $userId;
+
+        $order = Order::create($validatedData);
 
         return response()->json($order, 201);
     }
