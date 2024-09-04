@@ -37,4 +37,21 @@ class Handler extends ExceptionHandler
         // Return a JSON response with a 401 status code
         return response()->json(['error' => 'Unauthenticated access'], 401);
     }
+
+    /**
+     * Render an exception into an HTTP response.
+     */
+    public function render($request, Throwable $exception)
+    {
+        // Check for ThrottleRequestsException and return a JSON response
+        if ($exception instanceof ThrottleRequestsException) {
+            \Log::info('Expect JSON:', [$request->expectsJson()]);
+            dd($request->expectsJson());
+            return response()->json([
+                'error' => 'Too Many Requests',
+            ], 429);
+        }
+
+        return parent::render($request, $exception);
+    }
 }

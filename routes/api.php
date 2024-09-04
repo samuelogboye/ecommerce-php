@@ -24,7 +24,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('address_infos', AddressInfoController::class);
     Route::apiResource('banners', BannerController::class);
@@ -44,7 +43,7 @@ Route::group([
     'prefix' => 'auth',
 
 ], function () {
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::middleware(['throttle:register'])->post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/refresh', [AuthController::class, 'refresh']);

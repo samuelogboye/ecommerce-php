@@ -13,6 +13,32 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/auth/register",
+     *     summary="Registration",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"first_name", "last_name", "email", "password", "password_confirmation"},
+     *             @OA\Property(property="first_name", type="string", example="Samuel"),
+     *             @OA\Property(property="last_name", type="string", example="Ogboye"),
+     *             @OA\Property(property="email", type="string", format="email", example="ogboyesam@gmail.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="Ok123456"),
+     *             @OA\Property(property="password_confirmation", type="string", format="password", example="Ok123456")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid request"
+     *     )
+     * )
+     */
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
