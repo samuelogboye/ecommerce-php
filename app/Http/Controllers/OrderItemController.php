@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrderItem;
+use Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Validator;
@@ -50,6 +51,18 @@ class OrderItemController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'order_id' => 'required|uuid|exists:orders,id',
+            'product_id' => 'required|integer|exists:products,id',
+            'order_qty' => 'required|integer',
+            'total_amount' => 'required|string|max:255',
+            'order_date' => 'required|date|before_or_equal:today',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $orderItem = OrderItem::findOrFail($id);
         $orderItem->update($request->all());
 
@@ -58,7 +71,13 @@ class OrderItemController extends Controller
 
     public function destroy($id)
     {
-        OrderItem::destroy($id);
+        $orderItem = OrderItem::find($id);
+
+        if (! $orderItem || $orderItem->user_id !== Auth::id()) {
+            return response()->json(['message' => "Order not found"], 404);
+        }
+
+        $orderItem->delete();
 
         return response()->json(null, 204);
     }

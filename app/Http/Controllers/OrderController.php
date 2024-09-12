@@ -74,6 +74,17 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'subtotal' => 'required|string',
+            'shipping_cost' => 'required|string',
+            'total' => 'required|string',
+            'status' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $order = Order::findOrFail($id);
         $order->update($request->all());
 
@@ -82,7 +93,13 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        Order::destroy($id);
+        $order = Order::find($id);
+
+        if (! $order || $order->user_id !== Auth::id()) {
+            return response()->json(['message' => "Order not found"], 404);
+        }
+
+        $order->delete();
 
         return response()->json(null, 204);
     }

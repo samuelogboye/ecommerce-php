@@ -45,7 +45,13 @@ class SubCategoryController extends Controller
 
     public function destroy($id)
     {
-        SubCategory::destroy($id);
+        $sub_category = SubCategory::find($id);
+
+        if (! $sub_category || $sub_category->user_id !== Auth::id()) {
+            return response()->json(['message' => "SubCategory not found"], 404);
+        }
+
+        $sub_category->delete();
 
         return response()->json(null, 204);
     }

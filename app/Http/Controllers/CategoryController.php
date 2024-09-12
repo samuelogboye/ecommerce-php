@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Validator;
@@ -63,6 +64,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $category = Category::findOrFail($id);
         $category->update($request->all());
 
@@ -74,7 +83,13 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        Category::destroy($id);
+        $category = Category::find($id);
+
+        if (! $category ) {
+            return response()->json(['message' => "Category not found"], 404);
+        }
+
+        $category->delete();
 
         return response()->json(null, 204);
     }

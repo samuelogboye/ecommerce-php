@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -54,7 +55,13 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        User::destroy($id);
+        $user = User::find($id);
+
+        if (! $user || $user->user_id !== Auth::id()) {
+            return response()->json(['message' => "User not found"], 404);
+        }
+
+        $user->delete();
 
         return response()->json(null, 204);
     }

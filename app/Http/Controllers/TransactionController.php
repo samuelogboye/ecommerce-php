@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -45,7 +46,13 @@ class TransactionController extends Controller
 
     public function destroy($id)
     {
-        Transaction::destroy($id);
+        $transaction = Transaction::find($id);
+
+        if (! $transaction || $transaction->user_id !== Auth::id()) {
+            return response()->json(['message' => "Transaction not found"], 404);
+        }
+
+        $transaction->delete();
 
         return response()->json(null, 204);
     }

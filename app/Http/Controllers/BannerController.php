@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Validator;
 
 class BannerController extends Controller
 {
+    private const BANNER_NOT_FOUND_ERROR = "Banner not found";
+
     public function index()
     {
         $banners = Banner::all();
@@ -41,12 +44,21 @@ class BannerController extends Controller
         try {
             return Banner::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Banner not found'], 404);
+            return response()->json(['message' => self::BANNER_NOT_FOUND_ERROR], 404);
         }
     }
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'content' => 'required|string|max:255',
+            'location' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $banner = Banner::findOrFail($id);
         $banner->update($request->all());
 
@@ -55,7 +67,13 @@ class BannerController extends Controller
 
     public function destroy($id)
     {
-        Banner::destroy($id);
+        $banner = Banner::find($id);
+
+        if (! $banner ) {
+            return response()->json(['message' => self::BANNER_NOT_FOUND_ERROR], 404);
+        }
+
+        $banner->delete();
 
         return response()->json(null, 204);
     }
