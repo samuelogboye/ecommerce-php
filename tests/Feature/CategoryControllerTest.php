@@ -20,7 +20,6 @@ class CategoryControllerTest extends TestCase
         Category::factory()->count(3)->create();
 
         $response = $this->getJson('/api/categories');
-        // dd($response->json());
 
         $response->assertStatus(200)
                  ->assertJsonStructure([
