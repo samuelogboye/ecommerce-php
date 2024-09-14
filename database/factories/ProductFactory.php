@@ -13,12 +13,13 @@ class ProductFactory extends Factory
 
     public function definition()
     {
-        $category = Category::inRandomOrder()->first();
+        $category = Category::inRandomOrder()->first() ?? Category::factory()->create();
 
         // Select a subcategory that belongs to the selected category
         $subcategory = SubCategory::where('category_id', $category->id)
             ->inRandomOrder()
-            ->first();
+            ->first() ?? SubCategory::factory()->create(['category_id' => $category->id]);
+
 
         return [
             'name' => $this->faker->word,
