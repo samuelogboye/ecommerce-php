@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
-use App\Models\OrderItem;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\User;
@@ -26,13 +26,13 @@ class OrderItemControllerTest extends TestCase
 
         // Assert the correct status and structure
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'message',
-                     'data' => [
-                         '*' => ['id', 'order_id', 'product_id', 'order_qty', 'total_amount', 'order_date']
-                     ],
-                     'count'
-                 ]);
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    '*' => ['id', 'order_id', 'product_id', 'order_qty', 'total_amount', 'order_date'],
+                ],
+                'count',
+            ]);
 
         // Assert that the count matches the number of order items created
         $this->assertEquals(3, $response['count']);
@@ -51,7 +51,6 @@ class OrderItemControllerTest extends TestCase
         $product = Product::factory()->create(['category_id' => $category->id, 'subcategory_id' => $subcategory->id]);
         $order = Order::factory()->create(['user_id' => $user->id]);
 
-
         // Order item data
         $orderItemData = [
             'order_id' => $order->id,
@@ -66,16 +65,16 @@ class OrderItemControllerTest extends TestCase
 
         // Assert the order item is created successfully
         $response->assertStatus(201)
-                 ->assertJsonStructure([
-                     'id',
-                     'order_id',
-                     'product_id',
-                     'order_qty',
-                     'total_amount',
-                     'order_date',
-                     'created_at',
-                     'updated_at',
-                 ]);
+            ->assertJsonStructure([
+                'id',
+                'order_id',
+                'product_id',
+                'order_qty',
+                'total_amount',
+                'order_date',
+                'created_at',
+                'updated_at',
+            ]);
 
         // Ensure the order item is in the database
         $this->assertDatabaseHas('order_items', [
@@ -106,7 +105,7 @@ class OrderItemControllerTest extends TestCase
 
         // Assert validation errors
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['order_id', 'product_id', 'order_qty', 'total_amount', 'order_date']);
+            ->assertJsonValidationErrors(['order_id', 'product_id', 'order_qty', 'total_amount', 'order_date']);
     }
 
     /** @test */
@@ -123,16 +122,16 @@ class OrderItemControllerTest extends TestCase
 
         // Assert that the order item is retrieved successfully
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'id',
-                     'order_id',
-                     'product_id',
-                     'order_qty',
-                     'total_amount',
-                     'order_date',
-                     'created_at',
-                     'updated_at',
-                 ]);
+            ->assertJsonStructure([
+                'id',
+                'order_id',
+                'product_id',
+                'order_qty',
+                'total_amount',
+                'order_date',
+                'created_at',
+                'updated_at',
+            ]);
     }
 
     /** @test */
@@ -147,7 +146,7 @@ class OrderItemControllerTest extends TestCase
 
         // Assert the 404 response
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'OrderItem not found']);
+            ->assertJson(['message' => 'OrderItem not found']);
     }
 
     /** @test */
@@ -171,11 +170,11 @@ class OrderItemControllerTest extends TestCase
 
         // Assert the order item was updated successfully
         $response->assertStatus(200)
-                 ->assertJson([
-                     'id' => $orderItem->id,
-                     'order_qty' => 5,
-                     'total_amount' => '100.00',
-                 ]);
+            ->assertJson([
+                'id' => $orderItem->id,
+                'order_qty' => 5,
+                'total_amount' => '100.00',
+            ]);
 
         // Ensure the order item was updated in the database
         $this->assertDatabaseHas('order_items', [
@@ -206,7 +205,7 @@ class OrderItemControllerTest extends TestCase
 
         // Assert validation errors
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['order_qty', 'total_amount', 'order_date']);
+            ->assertJsonValidationErrors(['order_qty', 'total_amount', 'order_date']);
     }
 
     /** @test */
@@ -240,7 +239,7 @@ class OrderItemControllerTest extends TestCase
 
         // Assert the 404 response
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'Order not found']);
+            ->assertJson(['message' => 'Order not found']);
     }
 
     /** @test */
@@ -261,7 +260,7 @@ class OrderItemControllerTest extends TestCase
 
         // Assert a 404 response since the order item does not belong to the user
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'Order not found']);
+            ->assertJson(['message' => 'Order not found']);
 
         // Ensure the order item still exists in the database
         $this->assertDatabaseHas('order_items', ['id' => $orderItem->id]);

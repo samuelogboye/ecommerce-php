@@ -22,13 +22,13 @@ class BannerControllerTest extends TestCase
         $response = $this->getJson('/api/banners');
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'message',
-                     'data' => [
-                         '*' => ['id', 'content', 'location']
-                     ],
-                     'count'
-                 ]);
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    '*' => ['id', 'content', 'location'],
+                ],
+                'count',
+            ]);
 
         $this->assertEquals(3, $response['count']);
     }
@@ -41,17 +41,17 @@ class BannerControllerTest extends TestCase
 
         $response = $this->postJson('/api/banners', [
             'content' => 'Black Friday Sale',
-            'location' => 'Homepage'
+            'location' => 'Homepage',
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure([
-                     'id',
-                     'content',
-                     'location',
-                     'created_at',
-                     'updated_at',
-                 ]);
+            ->assertJsonStructure([
+                'id',
+                'content',
+                'location',
+                'created_at',
+                'updated_at',
+            ]);
     }
 
     /** @test */
@@ -62,11 +62,11 @@ class BannerControllerTest extends TestCase
 
         $response = $this->postJson('/api/banners', [
             'content' => '', // Missing content
-            'location' => '' // Missing location
+            'location' => '', // Missing location
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['content', 'location']);
+            ->assertJsonValidationErrors(['content', 'location']);
     }
 
     /** @test */
@@ -80,13 +80,13 @@ class BannerControllerTest extends TestCase
         $response = $this->getJson("/api/banners/{$banner->id}");
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'id',
-                     'content',
-                     'location',
-                     'created_at',
-                     'updated_at'
-                 ]);
+            ->assertJsonStructure([
+                'id',
+                'content',
+                'location',
+                'created_at',
+                'updated_at',
+            ]);
     }
 
     /** @test */
@@ -98,7 +98,7 @@ class BannerControllerTest extends TestCase
         $response = $this->getJson('/api/banners/9999'); // Non-existent ID
 
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'Banner not found']);
+            ->assertJson(['message' => 'Banner not found']);
     }
 
     /** @test */
@@ -114,15 +114,15 @@ class BannerControllerTest extends TestCase
 
         $response = $this->putJson("/api/banners/{$banner->id}", [
             'content' => 'Updated Content',
-            'location' => 'Updated Location'
+            'location' => 'Updated Location',
         ]);
 
         $response->assertStatus(200)
-                 ->assertJson([
-                     'id' => $banner->id,
-                     'content' => 'Updated Content',
-                     'location' => 'Updated Location',
-                 ]);
+            ->assertJson([
+                'id' => $banner->id,
+                'content' => 'Updated Content',
+                'location' => 'Updated Location',
+            ]);
     }
 
     /** @test */
@@ -135,11 +135,11 @@ class BannerControllerTest extends TestCase
 
         $response = $this->putJson("/api/banners/{$banner->id}", [
             'content' => '', // Invalid data
-            'location' => '' // Invalid data
+            'location' => '', // Invalid data
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['content', 'location']);
+            ->assertJsonValidationErrors(['content', 'location']);
     }
 
     /** @test */
@@ -166,7 +166,6 @@ class BannerControllerTest extends TestCase
         $response = $this->deleteJson('/api/banners/9999'); // Non-existent ID
 
         $response->assertStatus(404)
-                ->assertJson(['message' => 'Banner not found']);
+            ->assertJson(['message' => 'Banner not found']);
     }
 }
-

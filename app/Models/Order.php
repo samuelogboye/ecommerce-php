@@ -17,6 +17,7 @@ class Order extends Model
     protected $fillable = [
         'id', 'subtotal', 'shipping_cost', 'total', 'user_id', 'status',
     ];
+
     // Automatically generate a UUID for the 'id' field when creating a new Order
     protected static function boot()
     {
@@ -28,7 +29,6 @@ class Order extends Model
             }
         });
     }
-
 
     public function user()
     {

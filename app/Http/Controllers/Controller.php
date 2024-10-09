@@ -10,18 +10,22 @@ use Illuminate\Routing\Controller as BaseController;
  * @OA\Info(
  *     title="Ecommerce API documentation",
  *     version="1.0.0",
+ *
  *     @OA\Contact(
  *         email="admin@samuelogboye.com"
  *     ),
+ *
  *     @OA\License(
  *         name="Apache 2.0",
  *         url="http://www.apache.org/licenses/LICENSE-2.0.html"
  *     )
  * )
+ *
  * @OA\Tag(
  *     name="Examples",
  *     description="Some example pages",
  * )
+ *
  * @OA\Server(
  *     description="Localhost API server",
  *     url="http://localhost:8000/api"
@@ -30,6 +34,7 @@ use Illuminate\Routing\Controller as BaseController;
  *     description="Localhost API server",
  *     url="http://localhost:8000/api"
  * )
+ *
  * @OA\SecurityScheme(
  *     type="apiKey",
  *     in="header",

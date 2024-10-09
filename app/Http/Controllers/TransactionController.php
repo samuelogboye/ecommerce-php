@@ -49,7 +49,7 @@ class TransactionController extends Controller
         $transaction = Transaction::find($id);
 
         if (! $transaction || $transaction->user_id !== Auth::id()) {
-            return response()->json(['message' => "Transaction not found"], 404);
+            return response()->json(['message' => 'Transaction not found'], 404);
         }
 
         $transaction->delete();

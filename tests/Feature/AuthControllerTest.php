@@ -23,12 +23,12 @@ class AuthControllerTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure([
-                     'message',
-                     'user' => [
-                         'id', 'first_name', 'last_name', 'email'
-                     ]
-                 ]);
+            ->assertJsonStructure([
+                'message',
+                'user' => [
+                    'id', 'first_name', 'last_name', 'email',
+                ],
+            ]);
     }
 
     /** @test */
@@ -43,13 +43,13 @@ class AuthControllerTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['first_name', 'last_name', 'email', 'password']);
-        
+            ->assertJsonValidationErrors(['first_name', 'last_name', 'email', 'password']);
+
         $this->assertEquals('The first name field is required.', $response['errors']['first_name'][0]);
         $this->assertEquals('The password field confirmation does not match.', $response['errors']['password'][0]);
         $this->assertEquals('The password field must be at least 6 characters.', $response['errors']['password'][1]);
         $this->assertEquals('The email field must be a valid email address.', $response['errors']['email'][0]);
-                    
+
     }
 
     /** @test */
@@ -66,12 +66,12 @@ class AuthControllerTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'access_token',
-                     'token_type',
-                     'expires_in',
-                     'user'
-                 ]);
+            ->assertJsonStructure([
+                'access_token',
+                'token_type',
+                'expires_in',
+                'user',
+            ]);
     }
 
     /** @test */
@@ -88,7 +88,7 @@ class AuthControllerTest extends TestCase
         ]);
 
         $response->assertStatus(401)
-                 ->assertJson(['error' => 'Unauthorised']);
+            ->assertJson(['error' => 'Unauthorised']);
     }
 
     /** @test */
@@ -97,14 +97,14 @@ class AuthControllerTest extends TestCase
         $user = User::factory()->create();
         $token = auth()->login($user);
 
-        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-                         ->getJson('/api/auth/profile');
+        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+            ->getJson('/api/auth/profile');
 
         $response->assertStatus(200)
-                 ->assertJson([
-                     'id' => $user->id,
-                     'email' => $user->email,
-                 ]);
+            ->assertJson([
+                'id' => $user->id,
+                'email' => $user->email,
+            ]);
     }
 
     /** @test */
@@ -113,7 +113,7 @@ class AuthControllerTest extends TestCase
         $response = $this->getJson('/api/auth/profile');
 
         $response->assertStatus(401)
-                 ->assertJson(['error' => 'Unauthenticated access']);
+            ->assertJson(['error' => 'Unauthenticated access']);
     }
 
     /** @test */
@@ -122,11 +122,11 @@ class AuthControllerTest extends TestCase
         $user = User::factory()->create();
         $token = auth()->login($user);
 
-        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-                         ->postJson('/api/auth/logout');
+        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson('/api/auth/logout');
 
         $response->assertStatus(200)
-                 ->assertJson(['message' => 'Successfully logged out']);
+            ->assertJson(['message' => 'Successfully logged out']);
     }
 
     /** @test */
@@ -135,15 +135,14 @@ class AuthControllerTest extends TestCase
         $user = User::factory()->create();
         $token = auth()->login($user);
 
-        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-                         ->postJson('/api/auth/refresh');
+        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson('/api/auth/refresh');
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'access_token',
-                     'token_type',
-                     'expires_in',
-                 ]);
+            ->assertJsonStructure([
+                'access_token',
+                'token_type',
+                'expires_in',
+            ]);
     }
 }
-

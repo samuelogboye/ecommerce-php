@@ -22,13 +22,13 @@ class CategoryControllerTest extends TestCase
         $response = $this->getJson('/api/categories');
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'message',
-                     'data' => [
-                         '*' => ['id', 'name', 'sub_categories', 'products']
-                     ],
-                     'count'
-                 ]);
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    '*' => ['id', 'name', 'sub_categories', 'products'],
+                ],
+                'count',
+            ]);
 
         $this->assertEquals(3, $response['count']);
     }
@@ -40,16 +40,16 @@ class CategoryControllerTest extends TestCase
         $this->actingAs($user, 'api');
 
         $response = $this->postJson('/api/categories', [
-            'name' => 'Electronics'
+            'name' => 'Electronics',
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure([
-                     'id',
-                     'name',
-                     'created_at',
-                     'updated_at',
-                 ]);
+            ->assertJsonStructure([
+                'id',
+                'name',
+                'created_at',
+                'updated_at',
+            ]);
     }
 
     /** @test */
@@ -63,7 +63,7 @@ class CategoryControllerTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['name']);
+            ->assertJsonValidationErrors(['name']);
     }
 
     /** @test */
@@ -75,11 +75,11 @@ class CategoryControllerTest extends TestCase
         Category::factory()->create(['name' => 'Electronics']);
 
         $response = $this->postJson('/api/categories', [
-            'name' => 'Electronics'
+            'name' => 'Electronics',
         ]);
 
         $response->assertStatus(422)
-                 ->assertJson(['error' => 'Category name already exists']);
+            ->assertJson(['error' => 'Category name already exists']);
     }
 
     /** @test */
@@ -93,14 +93,14 @@ class CategoryControllerTest extends TestCase
         $response = $this->getJson("/api/categories/{$category->id}");
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'id',
-                     'name',
-                     'sub_categories',
-                     'products',
-                     'created_at',
-                     'updated_at'
-                 ]);
+            ->assertJsonStructure([
+                'id',
+                'name',
+                'sub_categories',
+                'products',
+                'created_at',
+                'updated_at',
+            ]);
     }
 
     /** @test */
@@ -112,7 +112,7 @@ class CategoryControllerTest extends TestCase
         $response = $this->getJson('/api/categories/9999'); // Non-existent ID
 
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'Category not found']);
+            ->assertJson(['message' => 'Category not found']);
     }
 
     /** @test */
@@ -122,18 +122,18 @@ class CategoryControllerTest extends TestCase
         $this->actingAs($user, 'api');
 
         $category = Category::factory()->create([
-            'name' => 'Old Category'
+            'name' => 'Old Category',
         ]);
 
         $response = $this->putJson("/api/categories/{$category->id}", [
-            'name' => 'Updated Category'
+            'name' => 'Updated Category',
         ]);
 
         $response->assertStatus(200)
-                 ->assertJson([
-                     'id' => $category->id,
-                     'name' => 'Updated Category'
-                 ]);
+            ->assertJson([
+                'id' => $category->id,
+                'name' => 'Updated Category',
+            ]);
     }
 
     /** @test */
@@ -149,7 +149,7 @@ class CategoryControllerTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['name']);
+            ->assertJsonValidationErrors(['name']);
     }
 
     /** @test */
@@ -175,7 +175,6 @@ class CategoryControllerTest extends TestCase
         $response = $this->deleteJson('/api/categories/9999'); // Non-existent ID
 
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'Category not found']);
+            ->assertJson(['message' => 'Category not found']);
     }
 }
-

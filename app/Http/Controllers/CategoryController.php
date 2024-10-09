@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Validator;
@@ -85,8 +84,8 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if (! $category ) {
-            return response()->json(['message' => "Category not found"], 404);
+        if (! $category) {
+            return response()->json(['message' => 'Category not found'], 404);
         }
 
         $category->delete();

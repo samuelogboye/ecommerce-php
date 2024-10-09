@@ -20,7 +20,6 @@ class ProductFactory extends Factory
             ->inRandomOrder()
             ->first() ?? SubCategory::factory()->create(['category_id' => $category->id]);
 
-
         return [
             'name' => $this->faker->word,
             'description' => $this->faker->paragraph,

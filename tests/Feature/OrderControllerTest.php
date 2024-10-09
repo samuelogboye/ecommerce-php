@@ -26,13 +26,13 @@ class OrderControllerTest extends TestCase
 
         // Assert status and structure
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'message',
-                     'data' => [
-                         '*' => ['id', 'subtotal', 'shipping_cost', 'total', 'status', 'order_items', 'transactions']
-                     ],
-                     'count'
-                 ]);
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    '*' => ['id', 'subtotal', 'shipping_cost', 'total', 'status', 'order_items', 'transactions'],
+                ],
+                'count',
+            ]);
 
         // Ensure the count matches the number of orders created
         $this->assertEquals(3, $response['count']);
@@ -50,7 +50,7 @@ class OrderControllerTest extends TestCase
             'subtotal' => '100.00',
             'shipping_cost' => '10.00',
             'total' => '110.00',
-            'status' => 'Pending'
+            'status' => 'Pending',
         ];
 
         // Call the store endpoint
@@ -58,15 +58,15 @@ class OrderControllerTest extends TestCase
 
         // Assert the order is created successfully
         $response->assertStatus(201)
-                 ->assertJsonStructure([
-                     'id',
-                     'subtotal',
-                     'shipping_cost',
-                     'total',
-                     'status',
-                     'created_at',
-                     'updated_at'
-                 ]);
+            ->assertJsonStructure([
+                'id',
+                'subtotal',
+                'shipping_cost',
+                'total',
+                'status',
+                'created_at',
+                'updated_at',
+            ]);
 
         // Ensure the order is in the database
         $this->assertDatabaseHas('orders', ['subtotal' => '100.00', 'user_id' => $user->id]);
@@ -84,7 +84,7 @@ class OrderControllerTest extends TestCase
             'subtotal' => '',
             'shipping_cost' => '',
             'total' => '',
-            'status' => ''
+            'status' => '',
         ];
 
         // Call the store endpoint with invalid data
@@ -92,7 +92,7 @@ class OrderControllerTest extends TestCase
 
         // Assert validation errors
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['subtotal', 'shipping_cost', 'total', 'status']);
+            ->assertJsonValidationErrors(['subtotal', 'shipping_cost', 'total', 'status']);
     }
 
     /** @test */
@@ -110,17 +110,17 @@ class OrderControllerTest extends TestCase
 
         // Assert that the order is retrieved successfully
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'id',
-                     'subtotal',
-                     'shipping_cost',
-                     'total',
-                     'status',
-                     'order_items',
-                     'transactions',
-                     'created_at',
-                     'updated_at'
-                 ]);
+            ->assertJsonStructure([
+                'id',
+                'subtotal',
+                'shipping_cost',
+                'total',
+                'status',
+                'order_items',
+                'transactions',
+                'created_at',
+                'updated_at',
+            ]);
     }
 
     /** @test */
@@ -135,7 +135,7 @@ class OrderControllerTest extends TestCase
 
         // Assert that a 404 error is returned
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'Order not found']);
+            ->assertJson(['message' => 'Order not found']);
     }
 
     /** @test */
@@ -153,7 +153,7 @@ class OrderControllerTest extends TestCase
             'subtotal' => '200.00',
             'shipping_cost' => '20.00',
             'total' => '220.00',
-            'status' => 'Shipped'
+            'status' => 'Shipped',
         ];
 
         // Call the update endpoint
@@ -161,13 +161,13 @@ class OrderControllerTest extends TestCase
 
         // Assert that the order was updated successfully
         $response->assertStatus(200)
-                 ->assertJson([
-                     'id' => $order->id,
-                     'subtotal' => '200.00',
-                     'shipping_cost' => '20.00',
-                     'total' => '220.00',
-                     'status' => 'Shipped'
-                 ]);
+            ->assertJson([
+                'id' => $order->id,
+                'subtotal' => '200.00',
+                'shipping_cost' => '20.00',
+                'total' => '220.00',
+                'status' => 'Shipped',
+            ]);
 
         // Ensure the order was updated in the database
         $this->assertDatabaseHas('orders', ['subtotal' => '200.00', 'id' => $order->id]);
@@ -188,7 +188,7 @@ class OrderControllerTest extends TestCase
             'subtotal' => '',
             'shipping_cost' => '',
             'total' => '',
-            'status' => ''
+            'status' => '',
         ];
 
         // Call the update endpoint with invalid data
@@ -196,7 +196,7 @@ class OrderControllerTest extends TestCase
 
         // Assert validation errors
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['subtotal', 'shipping_cost', 'total', 'status']);
+            ->assertJsonValidationErrors(['subtotal', 'shipping_cost', 'total', 'status']);
     }
 
     /** @test */
@@ -231,7 +231,7 @@ class OrderControllerTest extends TestCase
 
         // Assert that a 404 error is returned
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'Order not found']);
+            ->assertJson(['message' => 'Order not found']);
     }
 
     /** @test */
@@ -252,10 +252,9 @@ class OrderControllerTest extends TestCase
 
         // Assert that a 404 error is returned because the order does not belong to the authenticated user
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'Order not found']);
+            ->assertJson(['message' => 'Order not found']);
 
         // Ensure the order still exists in the database
         $this->assertDatabaseHas('orders', ['id' => $order->id]);
     }
 }
-

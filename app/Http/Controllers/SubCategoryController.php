@@ -48,7 +48,7 @@ class SubCategoryController extends Controller
         $sub_category = SubCategory::find($id);
 
         if (! $sub_category || $sub_category->user_id !== Auth::id()) {
-            return response()->json(['message' => "SubCategory not found"], 404);
+            return response()->json(['message' => 'SubCategory not found'], 404);
         }
 
         $sub_category->delete();

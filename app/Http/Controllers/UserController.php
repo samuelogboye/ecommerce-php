@@ -14,6 +14,7 @@ class UserController extends Controller
      *     path="/users",
      *     summary="Get a list of users",
      *     tags={"Users"},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation"
@@ -23,7 +24,7 @@ class UserController extends Controller
      *         description="Invalid request"
      *     )
      * )
-    */
+     */
     public function index()
     {
         return User::with('orders', 'addressInfo', 'transactions')->get();
@@ -58,7 +59,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (! $user || $user->user_id !== Auth::id()) {
-            return response()->json(['message' => "User not found"], 404);
+            return response()->json(['message' => 'User not found'], 404);
         }
 
         $user->delete();

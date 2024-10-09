@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use App\Models\AddressInfo;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -37,7 +37,7 @@ class AddressInfoControllerTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure(['id', 'address_1', 'city']);
+            ->assertJsonStructure(['id', 'address_1', 'city']);
     }
 
     /** @test */
@@ -55,7 +55,7 @@ class AddressInfoControllerTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['address_1']);
+            ->assertJsonValidationErrors(['address_1']);
     }
 
     /** @test */
@@ -69,7 +69,7 @@ class AddressInfoControllerTest extends TestCase
         $response = $this->get("/api/address_infos/{$addressInfo->id}");
 
         $response->assertStatus(200)
-                 ->assertJson(['id' => $addressInfo->id]);
+            ->assertJson(['id' => $addressInfo->id]);
     }
 
     /** @test */
@@ -83,7 +83,7 @@ class AddressInfoControllerTest extends TestCase
         $response = $this->get("/api/address_infos/{$addressInfo->id}");
 
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'AddressInfo not found or access denied']);
+            ->assertJson(['message' => 'AddressInfo not found or access denied']);
     }
 
     /** @test */
@@ -103,7 +103,7 @@ class AddressInfoControllerTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-                 ->assertJson(['address_1' => '456 New Address']);
+            ->assertJson(['address_1' => '456 New Address']);
     }
 
     /** @test */
@@ -120,7 +120,7 @@ class AddressInfoControllerTest extends TestCase
         ]);
 
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'AddressInfo not found or access denied']);
+            ->assertJson(['message' => 'AddressInfo not found or access denied']);
     }
 
     /** @test */
@@ -147,6 +147,6 @@ class AddressInfoControllerTest extends TestCase
         $response = $this->delete("/api/address_infos/{$addressInfo->id}");
 
         $response->assertStatus(404)
-                 ->assertJson(['message' => 'AddressInfo not found or access denied']);
+            ->assertJson(['message' => 'AddressInfo not found or access denied']);
     }
 }

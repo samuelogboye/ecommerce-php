@@ -74,7 +74,7 @@ class OrderItemController extends Controller
         $orderItem = OrderItem::find($id);
 
         if (! $orderItem || $orderItem->user_id !== Auth::id()) {
-            return response()->json(['message' => "Order not found"], 404);
+            return response()->json(['message' => 'Order not found'], 404);
         }
 
         $orderItem->delete();

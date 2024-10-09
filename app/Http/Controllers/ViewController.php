@@ -47,8 +47,8 @@ class ViewController extends Controller
     {
         $view = View::find($id);
 
-        if (! $view ) {
-            return response()->json(['message' => "View not found"], 404);
+        if (! $view) {
+            return response()->json(['message' => 'View not found'], 404);
         }
 
         $view->delete();

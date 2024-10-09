@@ -17,7 +17,7 @@ class ExampleTest extends TestCase
 
     public function testUserCanBeCreated()
     {
-        $user = new User();
+        $user = new User;
         $this->assertInstanceOf(User::class, $user);
     }
 }

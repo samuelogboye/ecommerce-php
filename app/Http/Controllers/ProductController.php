@@ -82,7 +82,7 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if (! $product || $product->user_id !== Auth::id()) {
-            return response()->json(['message' => "Product not found"], 404);
+            return response()->json(['message' => 'Product not found'], 404);
         }
 
         $product->delete();

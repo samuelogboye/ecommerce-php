@@ -47,6 +47,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ThrottleRequestsException) {
             \Log::info('Expect JSON:', [$request->expectsJson()]);
             dd($request->expectsJson());
+
             return response()->json([
                 'error' => 'Too Many Requests',
             ], 429);

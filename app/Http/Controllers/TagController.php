@@ -47,8 +47,8 @@ class TagController extends Controller
     {
         $tag = Tag::find($id);
 
-        if (! $tag ) {
-            return response()->json(['message' => "Tag not found"], 404);
+        if (! $tag) {
+            return response()->json(['message' => 'Tag not found'], 404);
         }
 
         $tag->delete();

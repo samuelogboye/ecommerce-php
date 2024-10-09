@@ -28,8 +28,8 @@ class OrderController extends Controller
 
         // Retrieve orders for the current user, including related orderItems and transactions
         $orders = Order::with('orderItems', 'transactions')
-                        ->where('user_id', $userId)
-                        ->get();
+            ->where('user_id', $userId)
+            ->get();
 
         return response()->json([
             'message' => 'Orders retrieved successfully',
@@ -96,7 +96,7 @@ class OrderController extends Controller
         $order = Order::find($id);
 
         if (! $order || $order->user_id !== Auth::id()) {
-            return response()->json(['message' => "Order not found"], 404);
+            return response()->json(['message' => 'Order not found'], 404);
         }
 
         $order->delete();
