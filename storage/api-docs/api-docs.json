@@ -27,7 +27,7 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Registration",
+                "summary": "Registrations",
                 "operationId": "ed42f392010c301892e640067141676e",
                 "requestBody": {
                     "required": true,
@@ -44,16 +44,16 @@
                                 "properties": {
                                     "first_name": {
                                         "type": "string",
-                                        "example": "Samuel"
+                                        "example": "John"
                                     },
                                     "last_name": {
                                         "type": "string",
-                                        "example": "Ogboye"
+                                        "example": "Doe"
                                     },
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "ogboyesam@gmail.com"
+                                        "example": "johndoe@gmail.com"
                                     },
                                     "password": {
                                         "type": "string",
@@ -71,6 +71,100 @@
                         }
                     }
                 },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "operationId": "8cb7742ae98d0990acb2907c4e00bf24",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Ok123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/auth/profile": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Profile",
+                "operationId": "19ebac4c2899c32cfe90402c3781e2e6",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "operationId": "0d29c740dc06d77602af8095bf4654cc",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh",
+                "operationId": "f6c9683ed975ace7d035a09e6e2a9332",
                 "responses": {
                     "200": {
                         "description": "Successful operation"

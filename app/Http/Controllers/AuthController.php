@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -16,7 +16,7 @@ class AuthController extends Controller
     /**
      * @OA\Post(
      *     path="/auth/register",
-     *     summary="Registration",
+     *     summary="Registrations",
      *     tags={"Auth"},
      *
      *     @OA\RequestBody(
@@ -25,9 +25,9 @@ class AuthController extends Controller
      *         @OA\JsonContent(
      *             required={"first_name", "last_name", "email", "password", "password_confirmation"},
      *
-     *             @OA\Property(property="first_name", type="string", example="Samuel"),
-     *             @OA\Property(property="last_name", type="string", example="Ogboye"),
-     *             @OA\Property(property="email", type="string", format="email", example="ogboyesam@gmail.com"),
+     *             @OA\Property(property="first_name", type="string", example="John"),
+     *             @OA\Property(property="last_name", type="string", example="Doe"),
+     *             @OA\Property(property="email", type="string", format="email", example="johndoe@gmail.com"),
      *             @OA\Property(property="password", type="string", format="password", example="Ok123456"),
      *             @OA\Property(property="password_confirmation", type="string", format="password", example="Ok123456")
      *         )
@@ -65,6 +65,33 @@ class AuthController extends Controller
         ], 201);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/auth/login",
+     *     summary="Login",
+     *     tags={"Auth"},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *
+     *             @OA\Property(property="email", type="string", format="email", example="johndoe@gmail.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="Ok123456"),
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid request"
+     *     )
+     * )
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -82,9 +109,20 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
+     * @OA\Get(
+     *     path="/auth/profile",
+     *     summary="Profile",
+     *     tags={"Auth"},
      *
-     * @return \Illuminate\Http\JsonResponse
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid request"
+     *     )
+     * )
      */
     public function profile()
     {
@@ -92,9 +130,20 @@ class AuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token).
+     * @OA\Post(
+     *     path="/auth/logout",
+     *     summary="Logout",
+     *     tags={"Auth"},
      *
-     * @return \Illuminate\Http\JsonResponse
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid request"
+     *     )
+     * )
      */
     public function logout()
     {
@@ -104,15 +153,31 @@ class AuthController extends Controller
     }
 
     /**
-     * Refresh a token.
+     * @OA\Post(
+     *     path="/auth/refresh",
+     *     summary="Refresh",
+     *     tags={"Auth"},
      *
-     * @return \Illuminate\Http\JsonResponse
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid request"
+     *     )    
+     * )
      */
     public function refresh()
     {
         return $this->createNewToken(auth()->refresh());
     }
 
+    /**
+     * @param  string  $token
+     * @return \Illuminate\Http\JsonResponse
+     * 
+     */
     public function createNewToken($token)
     {
         return response()->json([
