@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'Ecommerce API documentation',
+                'title' => 'E-commerce API documentation',
             ],
 
             'routes' => [
@@ -215,6 +215,11 @@ return [
                     'in' => 'header', // The location of the API key. Valid values are "query" or "header".
                 ],
                 */
+                'bearerAuth' => [
+                    'type' => 'http',
+                    'scheme' => 'bearer',
+                    'bearerFormat' => 'JWT',
+                ],
             ],
             'security' => [
                 /*
@@ -229,6 +234,7 @@ return [
 
                     'passport' => []
                     */
+                    'bearerAuth' => [],
                 ],
             ],
         ],

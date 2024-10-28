@@ -70,6 +70,7 @@ class AuthController extends Controller
      *     path="/auth/login",
      *     summary="Login",
      *     tags={"Auth"},
+     * 
      *
      *     @OA\RequestBody(
      *         required=true,
@@ -113,6 +114,7 @@ class AuthController extends Controller
      *     path="/auth/profile",
      *     summary="Profile",
      *     tags={"Auth"},
+     *     security={{"bearerAuth": {}}},
      *
      *     @OA\Response(
      *         response=200,
@@ -134,6 +136,7 @@ class AuthController extends Controller
      *     path="/auth/logout",
      *     summary="Logout",
      *     tags={"Auth"},
+     *     security={{"bearerAuth": {}}},
      *
      *     @OA\Response(
      *         response=200,
@@ -157,6 +160,7 @@ class AuthController extends Controller
      *     path="/auth/refresh",
      *     summary="Refresh",
      *     tags={"Auth"},
+     *     security={{"bearerAuth": {}}},
      *
      *     @OA\Response(
      *         response=200,

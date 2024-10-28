@@ -138,7 +138,12 @@
                     "400": {
                         "description": "Invalid request"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/auth/logout": {
@@ -155,7 +160,12 @@
                     "400": {
                         "description": "Invalid request"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/auth/refresh": {
@@ -172,7 +182,12 @@
                     "400": {
                         "description": "Invalid request"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users": {
@@ -199,6 +214,11 @@
                 "type": "apiKey",
                 "name": "X-APP-ID",
                 "in": "header"
+            },
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     },
@@ -210,6 +230,11 @@
         {
             "name": "Users",
             "description": "Users"
+        }
+    ],
+    "security": [
+        {
+            "bearerAuth": []
         }
     ]
 }

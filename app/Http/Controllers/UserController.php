@@ -12,7 +12,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      *     path="/users",
-     *     summary="Get a list of users",
+     *     summary="Get a list of all users",
      *     tags={"Users"},
      *
      *     @OA\Response(
