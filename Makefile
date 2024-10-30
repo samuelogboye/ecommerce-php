@@ -20,7 +20,6 @@ init:
 	./vendor/bin/sail up
 	./vendor/bin/sail artisan key:generate
 	./vendor/bin/sail artisan jwt:secret
-	./vendor/bin/sail artisan migrate:fresh --seed
 
 run: | init
 	./vendor/bin/sail up
