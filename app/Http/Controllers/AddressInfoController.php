@@ -16,7 +16,7 @@ class AddressInfoController extends Controller
         $info = AddressInfo::all();
 
         return response()->json([
-            'message' => 'All Address Info retrieved',
+            'message' => 'All Address Infos retrieved',
             'data' => $info,
         ], 200);
     }
