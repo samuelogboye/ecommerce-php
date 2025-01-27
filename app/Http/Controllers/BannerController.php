@@ -26,7 +26,7 @@ class BannerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'content' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
+            'location' => 'required|string|max:50',
         ]);
 
         if ($validator->fails()) {
@@ -51,7 +51,7 @@ class BannerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'content' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
+            'location' => 'required|string|max:50',
         ]);
 
         if ($validator->fails()) {
